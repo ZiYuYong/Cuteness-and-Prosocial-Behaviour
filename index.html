@@ -195,29 +195,6 @@
             margin-top: 2rem;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            opacity: 0;
-        }
-
-        .btn:hover::before {
-            animation: shine 0.6s ease-in-out;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
-        }
-
         .form-group {
             margin-bottom: 2rem;
         }
@@ -266,262 +243,6 @@
             gap: 0.5rem;
         }
 
-        .zoo-entrance {
-            text-align: center;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
-            border-radius: 25px;
-            padding: 3rem;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .zoo-entrance::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .zoo-gate {
-            font-size: 6rem;
-            margin: 2rem 0;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
-        }
-
-        .enter-zoo-btn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            font-size: 1.3rem;
-            padding: 1.5rem 3rem;
-            margin: 2rem;
-            animation: pulse 2s infinite;
-        }
-
-        .enter-zoo-btn:hover {
-            box-shadow: 0 20px 40px rgba(40, 167, 69, 0.4);
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .zoo-encounter {
-            text-align: center;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
-            border-radius: 25px;
-            padding: 2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .animal-image {
-            max-width: 400px;
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-        }
-
-        .animal-image:hover {
-            transform: scale(1.05) rotate(1deg);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .donation-section {
-            background: #f8f9fa;
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 3px solid rgba(103, 126, 234, 0.1);
-        }
-
-        .slider-container {
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .slider {
-            width: 100%;
-            height: 15px;
-            border-radius: 8px;
-            background: linear-gradient(to right, #e9ecef 0%, #667eea 100%);
-            outline: none;
-            -webkit-appearance: none;
-            margin: 1.5rem 0;
-            position: relative;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .slider::-webkit-slider-thumb:hover {
-            transform: scale(1.3);
-            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.6);
-        }
-
-        .slider::-moz-range-thumb {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .slider-values {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1rem;
-            color: #666;
-            font-weight: bold;
-            margin-top: 0.5rem;
-        }
-
-        .donation-display {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 1.5rem 0;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
-        }
-
-        .progress-container {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .progress-bar {
-            background: rgba(255, 255, 255, 0.3);
-            height: 15px;
-            border-radius: 8px;
-            margin: 1rem 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            height: 100%;
-            width: 0%;
-            transition: width 0.6s ease;
-            border-radius: 8px;
-        }
-
-        .progress-text {
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .likert-scale {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .likert-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1.5rem 1rem;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background: rgba(248, 249, 250, 0.8);
-            border: 2px solid transparent;
-        }
-
-        .likert-item:hover {
-            background: rgba(103, 126, 234, 0.1);
-            border-color: rgba(103, 126, 234, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .likert-item input[type="radio"] {
-            margin-bottom: 1rem;
-            transform: scale(1.5);
-        }
-
-        .likert-item label {
-            font-size: 0.9rem;
-            font-weight: normal;
-            text-align: center;
-            line-height: 1.3;
-        }
-
-        .attention-check-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .attention-image-item {
-            text-align: center;
-            padding: 1.5rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background: rgba(248, 249, 250, 0.8);
-            border: 3px solid transparent;
-        }
-
-        .attention-image-item:hover {
-            background: rgba(103, 126, 234, 0.1);
-            border-color: rgba(103, 126, 234, 0.3);
-            transform: translateY(-8px);
-        }
-
-        .attention-image-item img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 15px;
-            margin-bottom: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease;
-        }
-
-        .attention-image-item:hover img {
-            transform: scale(1.05);
-        }
-
         .error-message {
             background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
             color: white;
@@ -539,16 +260,6 @@
             75% { transform: translateX(8px); }
         }
 
-        .success-message {
-            background: linear-gradient(135deg, #51cf66 0%, #69db7c 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            text-align: center;
-            font-weight: bold;
-        }
-
         .thank-you-page {
             text-align: center;
             padding: 4rem 2rem;
@@ -563,43 +274,10 @@
             margin-bottom: 2rem;
         }
 
-        .stats-display {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, rgba(103, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid rgba(103, 126, 234, 0.2);
-            backdrop-filter: blur(5px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
         @media (max-width: 768px) {
             .container { padding: 15px; }
             .header h1 { font-size: 2.2rem; }
             .section { padding: 1.5rem; }
-            .likert-scale { grid-template-columns: 1fr; gap: 1rem; }
-            .attention-check-grid { grid-template-columns: 1fr; }
-            .animal-image { max-width: 100%; height: 280px; }
-            .stats-display { grid-template-columns: 1fr; }
             .navigation-buttons { flex-direction: column; }
             .age-grid { grid-template-columns: repeat(3, 1fr); }
         }
@@ -738,3 +416,138 @@
                     <label><input type="radio" name="vision" value="corrected"> 👓 Yes, but corrected with glasses or contact lenses</label>
                     <label><input type="radio" name="vision" value="uncorrected"> ❌ Yes, uncorrected</label>
                     <label><input type="radio" name="vision" value="prefer-not-to-say"> 🤐 Prefer not to say</label>
+                </div>
+            </div>
+
+            <div id="demographics-error" class="error-message hidden"></div>
+
+            <div class="navigation-buttons">
+                <button class="btn btn-back" onclick="proceedToSection('informed-consent')">⬅️ Back</button>
+                <button class="btn btn-primary" onclick="validateDemographics()">✅ Continue to Study</button>
+            </div>
+        </div>
+
+        <!-- Thank You Page -->
+        <div class="section hidden" id="thank-you">
+            <div class="thank-you-page">
+                <h1>🙏 Thank You</h1>
+                <p style="font-size: 1.3rem;">Thank you for your interest in our research study.</p>
+                <p>Your time is valuable, and we appreciate your consideration.</p>
+                <div style="font-size: 4rem; margin: 2rem 0;">🦁🐧🐸🦒</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentSection = 'informed-consent';
+        let studyData = {
+            participantId: 'PART_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+            startTime: new Date().toISOString(),
+            demographics: {},
+            completionTime: null,
+            finalConsentGiven: false
+        };
+
+        // Initialize study when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🦁 Virtual Zoo Study Initialized');
+            console.log('📊 Participant ID:', studyData.participantId);
+            animateFloatingElements();
+        });
+
+        function animateFloatingElements() {
+            const elements = document.querySelectorAll('.floating-element');
+            elements.forEach((element, index) => {
+                setInterval(() => {
+                    const randomX = Math.random() * (window.innerWidth - 100);
+                    const randomY = Math.random() * (window.innerHeight - 100);
+                    element.style.transition = 'all 6s ease-in-out';
+                    element.style.left = randomX + 'px';
+                    element.style.top = randomY + 'px';
+                }, 10000 + index * 2000);
+            });
+        }
+
+        // Navigation functions
+        function proceedToSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+            currentSection = sectionId;
+            window.scrollTo(0, 0);
+        }
+
+        // Consent handling
+        function handleConsentAccept() {
+            studyData.finalConsentGiven = true;
+            proceedToSection('demographics');
+        }
+
+        function handleConsentDecline() {
+            studyData.withdrawalPoint = 'informed_consent_refused';
+            studyData.completionTime = new Date().toISOString();
+            studyData.finalConsentGiven = false;
+            proceedToSection('thank-you');
+        }
+
+        // Demographics validation
+        function validateDemographics() {
+            const age = document.querySelector('input[name="age"]:checked')?.value;
+            const vision = document.querySelector('input[name="vision"]:checked')?.value;
+            const gender = document.querySelector('input[name="gender"]:checked')?.value;
+            const nationality = document.querySelector('input[name="nationality"]:checked')?.value;
+
+            if (!age || !vision || !gender || !nationality) {
+                showError('demographics-error', '⚠️ Please answer all demographic questions before continuing.');
+                return;
+            }
+
+            // Save demographic data
+            studyData.demographics = {
+                age: age,
+                gender: gender,
+                nationality: nationality,
+                vision: vision,
+                eligibleForStudy: true
+            };
+
+            // Check exclusion criteria
+            const validAges = ['18', '19', '20', '21', '22', '23', '24', '25'];
+            if (!validAges.includes(age) || vision === 'uncorrected' || vision === 'prefer-not-to-say') {
+                studyData.demographics.eligibleForStudy = false;
+                studyData.withdrawalPoint = 'demographics_ineligible';
+                studyData.completionTime = new Date().toISOString();
+                
+                console.log('Participant ineligible:', studyData);
+                proceedToSection('thank-you');
+                return;
+            }
+
+            console.log('Demographics validated:', studyData.demographics);
+            alert('Demographics validated! Study would continue from here in the full version.');
+        }
+
+        function showError(containerId, message) {
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.textContent = message;
+                container.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    container.classList.add('hidden');
+                }, 5000);
+            }
+        }
+
+        // Prevent accidental page refresh during study
+        window.addEventListener('beforeunload', function(e) {
+            if (currentSection !== 'informed-consent' && currentSection !== 'thank-you') {
+                e.preventDefault();
+                e.returnValue = 'You are in the middle of the study. Are you sure you want to leave?';
+            }
+        });
+    </script>
+</body>
+</html>
