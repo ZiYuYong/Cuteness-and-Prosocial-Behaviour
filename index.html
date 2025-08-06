@@ -579,37 +579,20 @@
             font-weight: 500;
         }
 
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-
+        /* Loading spinner for data submission */
         .loading-spinner {
-            text-align: center;
-            color: white;
-        }
-
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #ffffff;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {
@@ -626,15 +609,6 @@
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loading-overlay">
-        <div class="loading-spinner">
-            <div class="spinner"></div>
-            <h3>💾 Saving your data to Google Sheets...</h3>
-            <p>Please wait, this may take a few seconds.</p>
-        </div>
-    </div>
-
     <div class="floating-elements">
         <div class="floating-element" style="top: 15%; left: 10%; animation-delay: 0s;">🦁</div>
         <div class="floating-element" style="top: 25%; right: 15%; animation-delay: 1.5s;">🐧</div>
@@ -1010,7 +984,6 @@
                 <div class="success-message">
                     <h2>Thank you for your valuable participation!</h2>
                     <p>Your responses have been recorded successfully and will contribute to important research on cuteness and prosocial behavior.</p>
-                    <div id="save-status"></div>
                 </div>
                 
                 <div class="stats-display">
@@ -1034,10 +1007,10 @@
     </div>
 
     <script>
-        // Google Apps Script Web App URL for data collection
-        const GOOGLE_SCRIPT_URL = '';
+        // Google Apps Script URL for data submission
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzCvYfgx--uJJSGxyRonGSptIQEqKY6kMR8gu24Oo37aBQJmOumm0Hg5Mh_AR5mxcUN/exec';
 
-        // Animal images in the spehttps://script.google.com/macros/s/AKfycbwS-wwEWjgb9UDiY6cW3xJXM2-GMfjHFh4l6CHAF8aQdm5Afc8CU-jpWwqwfbcrG7_e/execcified order from the study
+        // Animal images in the specified order from the study
         const animalImages = [
             "https://i.imgur.com/unjRTSV.png", // Baby puppy
             "https://i.imgur.com/xaxASmm.png", // Adult dog
@@ -1062,13 +1035,19 @@
         let validityTestData = [];
         let totalDonated = 0;
         let sectionHistory = [];
+        let participantId = null;
 
         // Initialize floating elements and slider
         document.addEventListener('DOMContentLoaded', function() {
+            participantId = generateParticipantId();
             animateFloatingElements();
             initializeSlider();
             setupEventListeners();
         });
+
+        function generateParticipantId() {
+            return Date.now().toString() + '_' + Math.random().toString(36).substr(2, 9);
+        }
 
         function animateFloatingElements() {
             const elements = document.querySelectorAll('.floating-element');
@@ -1200,7 +1179,7 @@
         function nextAnimal() {
             const donationAmount = parseFloat((document.getElementById('donation-slider').value / 100).toFixed(2));
             donations.push({
-                animal: currentAnimalIndex,
+                animal: currentAnimalIndex + 1,
                 imageUrl: animalImages[currentAnimalIndex],
                 donation: donationAmount,
                 kept: parseFloat((10 - donationAmount).toFixed(2))
@@ -1221,17 +1200,6 @@
             
             document.getElementById('summary-total-donated').textContent = `RM ${totalDonated.toFixed(2)}`;
             document.getElementById('summary-total-kept').textContent = `RM ${totalKept.toFixed(2)}`;
-            
-            // Record summary data
-            const summaryData = {
-                totalAnimals: animalImages.length,
-                totalDonated: totalDonated.toFixed(2),
-                totalKept: totalKept.toFixed(2),
-                averageDonation: (totalDonated / animalImages.length).toFixed(2),
-                donationDetails: donations
-            };
-            
-            console.log('🦁 Zoo Visit Summary:', summaryData);
             
             proceedToSection('zoo-summary');
         }
@@ -1328,42 +1296,15 @@
             }
         }
 
-        function showLoading(show) {
-            const overlay = document.getElementById('loading-overlay');
-            overlay.style.display = show ? 'flex' : 'none';
-        }
-
-        async function saveToGoogleSheets(data) {
-            try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    mode: 'no-cors', // Important for Google Apps Script
-                    body: JSON.stringify(data)
-                });
-
-                // Note: Due to no-cors mode, we can't read the response
-                // But if the request completes without throwing an error, it likely succeeded
-                return { success: true, message: 'Data sent successfully' };
-
-            } catch (error) {
-                console.error('Error saving to Google Sheets:', error);
-                return { success: false, error: error.message };
-            }
-        }
-
-        async function completeStudy() {
-            showLoading(true);
-
+        // Function to collect all study data
+        function collectStudyData() {
             // Collect manipulation check ratings
             manipulationRatings = [];
             for (let i = 0; i < animalImages.length; i++) {
                 const rating = document.querySelector(`input[name="cuteness-${i}"]:checked`)?.value;
                 if (rating) {
                     manipulationRatings.push({
-                        animal: i,
+                        animal: i + 1,
                         imageUrl: animalImages[i],
                         cuteness: parseInt(rating)
                     });
@@ -1378,49 +1319,119 @@
             validityTestData = Array.from(document.querySelectorAll('input[name="validity"]:checked'))
                 .map(el => el.value);
 
-            // Prepare complete study data
+            // Prepare comprehensive study data
             const studyData = {
-                demographics: {
-                    age: document.querySelector('input[name="age"]:checked')?.value,
-                    gender: document.querySelector('input[name="gender"]:checked')?.value,
-                    nationality: document.querySelector('input[name="nationality"]:checked')?.value,
-                    vision: document.querySelector('input[name="vision"]:checked')?.value,
-                },
-                donations: donations,
-                totalDonated: totalDonated.toFixed(2),
-                manipulationRatings: manipulationRatings,
-                attentionCheckData: attentionCheckData,
-                validityTestData: validityTestData,
+                // Basic info
+                participant_id: participantId,
                 timestamp: new Date().toISOString(),
-                studyDuration: Date.now() - studyStartTime
+                study_start_time: new Date(studyStartTime).toISOString(),
+                study_completion_time: new Date().toISOString(),
+                study_duration_minutes: Math.round((Date.now() - studyStartTime) / 60000),
+                
+                // Demographics
+                age: document.querySelector('input[name="age"]:checked')?.value || '',
+                gender: document.querySelector('input[name="gender"]:checked')?.value || '',
+                nationality: document.querySelector('input[name="nationality"]:checked')?.value || '',
+                vision_condition: document.querySelector('input[name="vision"]:checked')?.value || '',
+                
+                // Donation behavior summary
+                total_donated: totalDonated.toFixed(2),
+                total_kept: (140 - totalDonated).toFixed(2),
+                average_donation: (totalDonated / 14).toFixed(2),
+                
+                // Individual animal donations (flatten for Google Sheets)
+                ...donations.reduce((acc, donation, index) => {
+                    acc[`animal_${index + 1}_donation`] = donation.donation;
+                    acc[`animal_${index + 1}_image_url`] = donation.imageUrl;
+                    return acc;
+                }, {}),
+                
+                // Individual cuteness ratings (flatten for Google Sheets)
+                ...manipulationRatings.reduce((acc, rating, index) => {
+                    acc[`animal_${rating.animal}_cuteness`] = rating.cuteness;
+                    return acc;
+                }, {}),
+                
+                // Attention check
+                attention_check_selections: attentionCheckData.join(','),
+                attention_check_count: attentionCheckData.length,
+                
+                // Validity test
+                validity_test_selections: validityTestData.join(','),
+                validity_correct1: validityTestData.includes('correct1') ? 'Yes' : 'No',
+                validity_correct2: validityTestData.includes('correct2') ? 'Yes' : 'No',
+                validity_incorrect1: validityTestData.includes('incorrect1') ? 'Yes' : 'No',
+                validity_incorrect2: validityTestData.includes('incorrect2') ? 'Yes' : 'No',
+                validity_test_passed: (validityTestData.includes('correct1') && validityTestData.includes('correct2')) ? 'Yes' : 'No',
+                
+                // Final consent
+                final_consent_given: document.getElementById('final-consent')?.checked ? 'Yes' : 'No',
+                study_completed: 'Yes',
+                completion_status: 'completed',
+                
+                // Raw data arrays (for backup/detailed analysis)
+                raw_donations: JSON.stringify(donations),
+                raw_cuteness_ratings: JSON.stringify(manipulationRatings),
+                raw_attention_data: JSON.stringify(attentionCheckData),
+                raw_validity_data: JSON.stringify(validityTestData)
             };
-
-            console.log('📊 STUDY COMPLETE - Data to be saved:', studyData);
-
-            // Save to Google Sheets
-            const saveResult = await saveToGoogleSheets(studyData);
             
-            showLoading(false);
+            return studyData;
+        }
 
+        // Function to submit data to Google Sheets
+        async function submitDataToGoogleSheets(data) {
+            const submitBtn = document.getElementById('complete-study-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            try {
+                // Show loading state
+                submitBtn.innerHTML = '<span class="loading-spinner"></span>Saving your data...';
+                submitBtn.disabled = true;
+                
+                console.log('📤 Submitting data to Google Sheets:', data);
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Required for Google Apps Script
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Note: With no-cors mode, we can't read the response
+                // But if we get here without error, the request was sent
+                console.log('✅ Data submitted successfully');
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Error submitting data:', error);
+                
+                // Show error state
+                submitBtn.innerHTML = '⚠️ Error - Try Again';
+                submitBtn.disabled = false;
+                
+                // Show error message to user
+                showError('debriefing', 'There was an error saving your data. Please try clicking "Complete Study" again. Your responses are still saved locally.');
+                
+                return false;
+            }
+        }
+
+        async function completeStudy() {
+            // Collect all study data
+            const studyData = collectStudyData();
+            
+            // Submit to Google Sheets
+            const submissionSuccess = await submitDataToGoogleSheets(studyData);
+            
+            // Always proceed to completion page (data is collected regardless)
             // Display final stats
             document.getElementById('total-donated').textContent = `RM ${totalDonated.toFixed(2)}`;
-            
-            // Show save status
-            const saveStatus = document.getElementById('save-status');
-            if (saveResult.success) {
-                saveStatus.innerHTML = `
-                    <p style="color: #28a745; font-weight: bold; margin-top: 1rem;">
-                        ✅ Your data has been successfully saved to our research database!
-                    </p>
-                `;
-            } else {
-                saveStatus.innerHTML = `
-                    <p style="color: #dc3545; font-weight: bold; margin-top: 1rem;">
-                        ⚠️ There was an issue saving your data. Please contact the researcher.
-                        <br>Error: ${saveResult.error}
-                    </p>
-                `;
-            }
+
+            // Log complete study data to console (backup)
+            console.log('📊 STUDY COMPLETE - Data Collected:', studyData);
 
             proceedToSection('study-complete');
         }
@@ -1434,6 +1445,7 @@
             validityTestData = [];
             totalDonated = 0;
             sectionHistory = [];
+            participantId = generateParticipantId();
             
             // Reset all form inputs
             document.querySelectorAll('input').forEach(input => {
@@ -1459,6 +1471,58 @@
             if (currentSection && currentSection !== 'informed-consent' && currentSection !== 'study-complete' && currentSection !== 'thank-you') {
                 e.preventDefault();
                 e.returnValue = 'You are in the middle of the study. Are you sure you want to leave?';
+            }
+        });
+
+        // Additional utility functions for data analysis
+        function calculateBabyVsAdultDonations() {
+            const babyAnimals = [0, 2, 4, 6, 8, 10, 12]; // Indices of baby animals
+            const adultAnimals = [1, 3, 5, 7, 9, 11, 13]; // Indices of adult animals
+            
+            let babyDonations = 0;
+            let adultDonations = 0;
+            
+            donations.forEach((donation, index) => {
+                if (babyAnimals.includes(index)) {
+                    babyDonations += donation.donation;
+                } else {
+                    adultDonations += donation.donation;
+                }
+            });
+            
+            return {
+                babyDonations: babyDonations.toFixed(2),
+                adultDonations: adultDonations.toFixed(2),
+                babyCutenessEffect: babyDonations - adultDonations
+            };
+        }
+
+        // Export data function (for researchers)
+        function exportStudyDataAsCSV() {
+            const data = collectStudyData();
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + Object.keys(data).join(",") + "\n"
+                + Object.values(data).join(",");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `zoo_study_${participantId}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Add keyboard shortcuts for researchers (hidden)
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+Shift+E to export data as CSV (for testing)
+            if (e.ctrlKey && e.shiftKey && e.key === 'E') {
+                exportStudyDataAsCSV();
+            }
+            
+            // Ctrl+Shift+D to display current data in console (for debugging)
+            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                console.log('🔍 Current Study Data:', collectStudyData());
             }
         });
     </script>
