@@ -427,6 +427,78 @@
             </div>
         </div>
 
+        <!-- 3. Zoo Entrance -->
+        <div class="section hidden" id="zoo-entrance">
+            <div class="zoo-entrance">
+                <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 3rem;">
+                    <span style="font-size: 4rem; margin-right: 1rem;">🎪</span>
+                    <h1 style="color: #6B7EF7; font-size: 3.5rem; margin: 0; text-align: center;">Welcome to Our Virtual Zoo!</h1>
+                    <span style="font-size: 4rem; margin-left: 1rem;">🎪</span>
+                </div>
+                
+                <div class="zoo-gate" style="text-align: center; margin: 3rem 0;">
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 4rem; margin-bottom: 3rem;">
+                        <span style="font-size: 4rem;">🌳</span>
+                        <span style="font-size: 4rem;">🦁</span>
+                        <span style="font-size: 4rem;">🌿</span>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; justify-content: center; margin: 3rem 0; gap: 2rem;">
+                        <span style="font-size: 4rem;">🚪</span>
+                        <div style="text-align: center;">
+                            <div style="font-size: 4rem; font-weight: bold; color: #333; line-height: 1;">ZOO</div>
+                            <div style="font-size: 4rem; font-weight: bold; color: #333; line-height: 1;">ENTRANCE</div>
+                        </div>
+                        <span style="font-size: 4rem;">🚪</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 4rem; margin-top: 3rem;">
+                        <span style="font-size: 4rem;">🌿</span>
+                        <span style="font-size: 4rem;">🐧</span>
+                        <span style="font-size: 4rem;">🌳</span>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; text-align: center;">You're about to embark on an amazing virtual zoo adventure!</p>
+                
+                <div class="highlight">
+                    <h3>🎯 How the Virtual Zoo Works:</h3>
+                    <p>• Every time you visit an animal, there is a <strong>RM10 visiting fee</strong></p>
+                    <p>• You can use this RM10 to buy food for the animal (in the range of <strong>RM0.00 to RM10.00</strong>)</p>
+                    <p>• OR skip buying food, and the RM10 will be kept for you and returned at the end</p>
+                    <p>• You'll see several animals and make this choice for each one</p>
+                    <p>• <strong>There are no right or wrong answers</strong> - just decide based on how you feel!</p>
+                </div>
+
+                <p style="font-size: 1.1rem; color: #666;">After finishing all the animals, we'll show the total amount you "spent" on the animals.</p>
+                
+                <div class="highlight" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%); margin-top: 1rem;">
+                    <p style="font-size: 1.1rem; font-weight: bold;">⚠️ Please treat it as if it were real, as you might need to pay the amount in the end.</p>
+                </div>
+
+                <button class="btn enter-zoo-btn" onclick="startStudyComplete()" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); font-size: 1.3rem; padding: 1.5rem 3rem; margin: 2rem;">🚪 Enter Zoo</button>
+            </div>
+
+            <div class="navigation-buttons" style="margin-top: 2rem;">
+                <button class="btn btn-back" onclick="proceedToSection('demographics')">⬅️ Back</button>
+            </div>
+        </div>
+
+        <!-- Study Complete -->
+        <div class="section hidden" id="study-complete">
+            <div style="text-align: center;">
+                <h1>🎉 Study Complete! 🎉</h1>
+                <div style="font-size: 4rem; margin: 2rem 0;">🦁🐧🐸🦒🐙🦋</div>
+                <div class="highlight" style="background: linear-gradient(135deg, #51cf66 0%, #69db7c 100%);">
+                    <h2>Thank you for your valuable participation!</h2>
+                    <p>Your responses have been recorded successfully and will contribute to important research on cuteness and prosocial behavior.</p>
+                    <p>This completes the study demonstration.</p>
+                </div>
+                
+                <button class="btn btn-primary" onclick="restartStudy()" style="margin-top: 2rem;">🔄 Restart Study</button>
+            </div>
+        </div>
+
         <!-- Thank You Page -->
         <div class="section hidden" id="thank-you">
             <div class="thank-you-page">
@@ -526,7 +598,7 @@
             }
 
             console.log('Demographics validated:', studyData.demographics);
-            alert('Demographics validated! Study would continue from here in the full version.');
+            proceedToSection('zoo-entrance');
         }
 
         function showError(containerId, message) {
@@ -539,6 +611,32 @@
                     container.classList.add('hidden');
                 }, 5000);
             }
+        }
+
+        function startStudyComplete() {
+            studyData.completionTime = new Date().toISOString();
+            console.log('Study completed:', studyData);
+            proceedToSection('study-complete');
+        }
+
+        function restartStudy() {
+            // Reset all variables
+            studyData = {
+                participantId: 'PART_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                startTime: new Date().toISOString(),
+                demographics: {},
+                completionTime: null,
+                finalConsentGiven: false
+            };
+            
+            // Reset all form inputs
+            document.querySelectorAll('input').forEach(input => {
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    input.checked = false;
+                }
+            });
+            
+            proceedToSection('informed-consent');
         }
 
         // Prevent accidental page refresh during study
