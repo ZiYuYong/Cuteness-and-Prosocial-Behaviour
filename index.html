@@ -740,4 +740,402 @@
         ];
 
         // Define which animals are babies (odd indices: 0, 2, 4, 6, 8, 10, 12)
-        const babyAnimalIndices = [0, 2, 4, 6,
+        const babyAnimalIndices = [0, 2, 4, 6, 8, 10, 12];
+        const adultAnimalIndices = [1, 3, 5, 7, 9, 11, 13];
+
+        let currentAnimalIndex = 0;
+        let participantId = '';
+        let startTime = new Date();
+
+        // Generate participant ID
+        function generateParticipantId() {
+            return 'P' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Initialize participant ID on load
+        window.addEventListener('DOMContentLoaded', function() {
+            participantId = generateParticipantId();
+            updateProgressBar(0);
+            
+            // Setup final consent checkbox listener
+            const finalConsentCheckbox = document.getElementById('finalConsent');
+            if (finalConsentCheckbox) {
+                finalConsentCheckbox.addEventListener('change', function() {
+                    const submitBtn = document.querySelector('#section8 .btn');
+                    if (submitBtn && submitBtn.textContent === 'Submit Study') {
+                        submitBtn.disabled = !this.checked;
+                    }
+                });
+            }
+        });
+
+        // Update progress bar
+        function updateProgressBar(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        // Show section function
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Update progress bar based on section
+            const progressMap = {
+                'section1': 10,
+                'section2': 20,
+                'section3': 30,
+                'section4': 40,
+                'section5': 70,
+                'section6': 80,
+                'section7': 85,
+                'section8': 90,
+                'thankYouSection': 100,
+                'resultsSection': 100
+            };
+            
+            if (progressMap[sectionId]) {
+                updateProgressBar(progressMap[sectionId]);
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Consent function
+        function consent() {
+            studyData.consent = true;
+            showSection('section2');
+        }
+
+        // Show thank you page
+        function showThankYou() {
+            showSection('thankYouSection');
+        }
+
+        // Validate demographics
+        function validateDemographics() {
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const nationality = document.getElementById('nationality').value;
+            const vision = document.getElementById('vision').value;
+            
+            // Check if all fields are filled
+            if (!age || !gender || !nationality || !vision) {
+                const errorDiv = document.getElementById('demographicsError');
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'Please answer all questions before proceeding.';
+                return;
+            }
+            
+            // Store demographics
+            studyData.demographics = {
+                age: age,
+                gender: gender,
+                nationality: nationality,
+                vision: vision
+            };
+            
+            // Check exclusion criteria
+            if (age === 'others' || vision === 'uncorrected' || vision === 'prefer-not') {
+                showThankYou();
+                return;
+            }
+            
+            // Proceed to zoo entrance
+            showSection('section3');
+        }
+
+        // Start dictator game
+        function startDictatorGame() {
+            currentAnimalIndex = 0;
+            studyData.donations = [];
+            showSection('section4');
+            displayAnimal();
+        }
+
+        // Display current animal
+        function displayAnimal() {
+            const animalImage = document.getElementById('animalImage');
+            const animalTitle = document.getElementById('animalTitle');
+            const slider = document.getElementById('donationSlider');
+            
+            animalImage.src = animalImages[currentAnimalIndex];
+            animalTitle.textContent = `Animal ${currentAnimalIndex + 1} of 14`;
+            slider.value = 0;
+            updateDonationDisplay();
+            
+            // Update progress within dictator game
+            const gameProgress = 40 + (currentAnimalIndex / 14) * 30;
+            updateProgressBar(gameProgress);
+        }
+
+        // Update donation display
+        function updateDonationDisplay() {
+            const slider = document.getElementById('donationSlider');
+            const donationAmount = parseFloat(slider.value).toFixed(2);
+            const refundAmount = (10 - parseFloat(slider.value)).toFixed(2);
+            
+            document.getElementById('donationAmount').textContent = donationAmount;
+            document.getElementById('refundAmount').textContent = refundAmount;
+        }
+
+        // Setup slider listener
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('donationSlider');
+            if (slider) {
+                slider.addEventListener('input', updateDonationDisplay);
+            }
+        });
+
+        // Next animal
+        function nextAnimal() {
+            const slider = document.getElementById('donationSlider');
+            const donationAmount = parseFloat(slider.value);
+            
+            // Store donation
+            studyData.donations.push({
+                animalIndex: currentAnimalIndex,
+                animalImage: animalImages[currentAnimalIndex],
+                donated: donationAmount,
+                refunded: 10 - donationAmount
+            });
+            
+            currentAnimalIndex++;
+            
+            if (currentAnimalIndex < 14) {
+                displayAnimal();
+            } else {
+                // All animals completed, show manipulation check
+                setupManipulationCheck();
+                showSection('section5');
+            }
+        }
+
+        // Setup manipulation check
+        function setupManipulationCheck() {
+            const container = document.getElementById('manipulationCheckContainer');
+            container.innerHTML = '';
+            
+            animalImages.forEach((image, index) => {
+                const checkDiv = document.createElement('div');
+                checkDiv.style.marginBottom = '30px';
+                checkDiv.innerHTML = `
+                    <div style="text-align: center;">
+                        <img src="${image}" style="max-width: 300px; height: auto; border-radius: 10px; margin-bottom: 15px;">
+                        <p>Animal ${index + 1}</p>
+                        <div class="likert-scale">
+                            <div class="likert-option">
+                                <input type="radio" name="cute${index}" value="1" id="cute${index}_1">
+                                <label for="cute${index}_1">1<br>Not cute at all</label>
+                            </div>
+                            <div class="likert-option">
+                                <input type="radio" name="cute${index}" value="2" id="cute${index}_2">
+                                <label for="cute${index}_2">2<br>Slightly cute</label>
+                            </div>
+                            <div class="likert-option">
+                                <input type="radio" name="cute${index}" value="3" id="cute${index}_3">
+                                <label for="cute${index}_3">3<br>Somewhat cute</label>
+                            </div>
+                            <div class="likert-option">
+                                <input type="radio" name="cute${index}" value="4" id="cute${index}_4">
+                                <label for="cute${index}_4">4<br>Moderately cute</label>
+                            </div>
+                            <div class="likert-option">
+                                <input type="radio" name="cute${index}" value="5" id="cute${index}_5">
+                                <label for="cute${index}_5">5<br>Quite cute</label>
+                            </div>
+                            <div class="likert-option">
+                                <input type="radio" name="cute${index}" value="6" id="cute${index}_6">
+                                <label for="cute${index}_6">6<br>Very cute</label>
+                            </div>
+                            <div class="likert-option">
+                                <input type="radio" name="cute${index}" value="7" id="cute${index}_7">
+                                <label for="cute${index}_7">7<br>Extremely cute</label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(checkDiv);
+            });
+        }
+
+        // Validate manipulation check
+        function validateManipulationCheck() {
+            studyData.manipulationCheck = [];
+            let allRated = true;
+            
+            for (let i = 0; i < 14; i++) {
+                const rating = document.querySelector(`input[name="cute${i}"]:checked`);
+                if (rating) {
+                    studyData.manipulationCheck.push({
+                        animalIndex: i,
+                        rating: parseInt(rating.value)
+                    });
+                } else {
+                    allRated = false;
+                }
+            }
+            
+            if (!allRated) {
+                document.getElementById('manipulationError').style.display = 'block';
+                return;
+            }
+            
+            showSection('section6');
+        }
+
+        // Record attention check
+        function recordAttentionCheck() {
+            studyData.attentionCheck = [];
+            const checkboxes = document.querySelectorAll('#section6 input[type="checkbox"]:checked');
+            checkboxes.forEach(cb => {
+                studyData.attentionCheck.push(cb.value);
+            });
+            
+            showSection('section7');
+        }
+
+        // Record validity test
+        function recordValidityTest() {
+            studyData.validityTest = [];
+            const checkboxes = document.querySelectorAll('#section7 input[type="checkbox"]:checked');
+            checkboxes.forEach(cb => {
+                studyData.validityTest.push(cb.value);
+            });
+            
+            showSection('section8');
+        }
+
+        // Submit study
+        function submitStudy() {
+            const finalConsentCheckbox = document.getElementById('finalConsent');
+            if (!finalConsentCheckbox.checked) {
+                alert('Please check the consent box to submit the study.');
+                return;
+            }
+            
+            studyData.finalConsent = true;
+            
+            // Prepare data for Google Sheets
+            const submissionData = prepareSubmissionData();
+            
+            // Log data to console for debugging
+            console.log('Study data submitted:', submissionData);
+            
+            // Submit to Google Sheets (if URL is configured)
+            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                submitToGoogleSheets(submissionData);
+            }
+            
+            showSection('resultsSection');
+        }
+
+        // Withdraw from study
+        function withdrawStudy() {
+            if (confirm('Are you sure you want to withdraw from the study? Your data will not be saved.')) {
+                showThankYou();
+            }
+        }
+
+        // Prepare submission data
+        function prepareSubmissionData() {
+            const endTime = new Date();
+            const duration = Math.round((endTime - startTime) / 1000 / 60); // in minutes
+            
+            // Calculate baby vs adult donations
+            let babyTotal = 0;
+            let adultTotal = 0;
+            let babyCount = 0;
+            let adultCount = 0;
+            
+            studyData.donations.forEach((donation, index) => {
+                if (babyAnimalIndices.includes(index)) {
+                    babyTotal += donation.donated;
+                    babyCount++;
+                } else {
+                    adultTotal += donation.donated;
+                    adultCount++;
+                }
+            });
+            
+            const data = {
+                date_time: endTime.toLocaleString(),
+                participant_id: participantId,
+                age: studyData.demographics.age,
+                gender: studyData.demographics.gender,
+                nationality: studyData.demographics.nationality,
+                vision_condition: studyData.demographics.vision,
+                
+                // Individual animal donations
+                animal_1_donation: studyData.donations[0]?.donated || 0,
+                animal_2_donation: studyData.donations[1]?.donated || 0,
+                animal_3_donation: studyData.donations[2]?.donated || 0,
+                animal_4_donation: studyData.donations[3]?.donated || 0,
+                animal_5_donation: studyData.donations[4]?.donated || 0,
+                animal_6_donation: studyData.donations[5]?.donated || 0,
+                animal_7_donation: studyData.donations[6]?.donated || 0,
+                animal_8_donation: studyData.donations[7]?.donated || 0,
+                animal_9_donation: studyData.donations[8]?.donated || 0,
+                animal_10_donation: studyData.donations[9]?.donated || 0,
+                animal_11_donation: studyData.donations[10]?.donated || 0,
+                animal_12_donation: studyData.donations[11]?.donated || 0,
+                animal_13_donation: studyData.donations[12]?.donated || 0,
+                animal_14_donation: studyData.donations[13]?.donated || 0,
+                
+                // Total and average donations
+                total_adult_donation: adultTotal.toFixed(2),
+                total_baby_donation: babyTotal.toFixed(2),
+                average_adult_donation: (adultTotal / adultCount).toFixed(2),
+                average_baby_donation: (babyTotal / babyCount).toFixed(2),
+                
+                // Individual refunds
+                animal_1_refund: studyData.donations[0]?.refunded || 10,
+                animal_2_refund: studyData.donations[1]?.refunded || 10,
+                animal_3_refund: studyData.donations[2]?.refunded || 10,
+                animal_4_refund: studyData.donations[3]?.refunded || 10,
+                animal_5_refund: studyData.donations[4]?.refunded || 10,
+                animal_6_refund: studyData.donations[5]?.refunded || 10,
+                animal_7_refund: studyData.donations[6]?.refunded || 10,
+                animal_8_refund: studyData.donations[7]?.refunded || 10,
+                animal_9_refund: studyData.donations[8]?.refunded || 10,
+                animal_10_refund: studyData.donations[9]?.refunded || 10,
+                animal_11_refund: studyData.donations[10]?.refunded || 10,
+                animal_12_refund: studyData.donations[11]?.refunded || 10,
+                animal_13_refund: studyData.donations[12]?.refunded || 10,
+                animal_14_refund: studyData.donations[13]?.refunded || 10,
+                
+                // Total refund
+                total_refund: (140 - babyTotal - adultTotal).toFixed(2),
+                
+                study_duration_minutes: duration
+            };
+            
+            return data;
+        }
+
+        // Submit to Google Sheets
+        function submitToGoogleSheets(data) {
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                console.log('Data submitted successfully');
+            })
+            .catch((error) => {
+                console.error('Error submitting data:', error);
+            });
+        }
