@@ -605,6 +605,7 @@
             .stats-display { grid-template-columns: 1fr; }
             .navigation-buttons { flex-direction: column; }
             .age-grid { grid-template-columns: repeat(3, 1fr); }
+            .zoo-gate img { max-width: 300px; }
         }
     </style>
 </head>
@@ -685,7 +686,7 @@
                 <p>Your participation in the study is voluntary.</p>
             </div>
 
-            <div class="navigation-buttons" style="justify-content: center; gap: 2rem;">
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem;">
                 <button class="btn btn-primary" onclick="proceedToSection('demographics')">I consent</button>
                 <button class="btn btn-back" onclick="proceedToSection('thank-you')">Do not consent</button>
             </div>
@@ -756,12 +757,8 @@
         <div class="section hidden" id="zoo-entrance">
             <div class="zoo-entrance">
                 <h1 style="color: #6B7EF7; font-size: 3rem; margin-bottom: 2rem;">🎪 Welcome to Our Virtual Zoo! 🎪</h1>
-                <div class="zoo-gate" style="font-size: 2.5rem; line-height: 1.4; margin: 3rem 0; display: flex; flex-direction: column; align-items: center;">
-                    <div style="margin-bottom: 1rem;">🌳 🦁 🌿</div>
-                    <div style="display: flex; align-items: center; margin: 1rem 0;">
-                        🚪 <span style="font-size: 3rem; font-weight: bold; color: #333; margin: 0 1rem;">ZOO<br>ENTRANCE</span> 🚪
-                    </div>
-                    <div style="margin-top: 1rem;">🌿 🐧 🌳</div>
+                <div class="zoo-gate" style="margin: 3rem 0; display: flex; justify-content: center; align-items: center;">
+                    <img src="https://i.imgur.com/wTReFzy.jpeg" alt="Zoo Entrance" style="max-width: 500px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                 </div>
                 <p style="font-size: 1.2rem; margin-bottom: 2rem;">You're about to embark on an amazing virtual zoo adventure!</p>
                 
@@ -800,8 +797,8 @@
                 <h2>🐾 Meet this wonderful animal!</h2>
                 
                 <div class="donation-section">
-                    <h3>💝 How much would you like to donate?</h3>
-                    <p style="font-size: 1.1rem;">In the range of RM0.00 to RM10.00, decide how much you willing to donate it to the animal for its food, shelter, or medical care.</p>
+                    <h3>💝 How much would you like to pay for their food?</h3>
+                    <p style="font-size: 1.1rem;">In the range of RM0.00 to RM10.00, decide how much you willing to donate it to the animal for its food and medical care.</p>
                     
                     <div class="slider-container">
                         <input type="range" min="0" max="1000" value="0" class="slider" id="donation-slider">
