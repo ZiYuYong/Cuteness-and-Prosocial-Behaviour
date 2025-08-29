@@ -1210,9 +1210,9 @@ Phone: +603 7849 3000
 
 <div class="navigation-buttons">
 
-<button class="btn btn-primary" onclick="proceedToSection('demographics')">I consent</button>
+<button class="btn btn-primary" id="consent-btn">I consent</button>
 
-<button class="btn btn-back" onclick="proceedToSection('thank-you')">Do not consent</button>
+<button class="btn btn-back" id="no-consent-btn">Do not consent</button>
 
 </div>
 
@@ -1834,39 +1834,21 @@ slider.addEventListener('input', updateDonationDisplay);
 
 function setupEventListeners() {
 
-// Add click handlers for main navigation buttons
+// Simple direct event listeners for main buttons
 
-const consentBtn = document.querySelector('button[onclick="proceedToSection(\'demographics\')"]');
-
-if (consentBtn) {
-
-consentBtn.addEventListener('click', function(e) {
-
-console.log('Consent button clicked');
+document.getElementById('consent-btn').addEventListener('click', function() {
 
 proceedToSection('demographics');
 
 });
 
-}
-
-const noConsentBtn = document.querySelector('button[onclick="proceedToSection(\'thank-you\')"]');
-
-if (noConsentBtn) {
-
-noConsentBtn.addEventListener('click', function(e) {
-
-console.log('No consent button clicked');
+document.getElementById('no-consent-btn').addEventListener('click', function() {
 
 proceedToSection('thank-you');
 
 });
 
-}
-
 // Final consent checkbox
-
-setTimeout(() => {
 
 const finalConsent = document.getElementById('final-consent');
 
@@ -1882,9 +1864,7 @@ completeBtn.disabled = !this.checked;
 
 }
 
-}, 1000);
-
-// Attention check - any selection enables continue
+// Attention check
 
 document.addEventListener('change', function(e) {
 
