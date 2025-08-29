@@ -1770,6 +1770,8 @@ const studyStartTime = Date.now();
 
 document.addEventListener('DOMContentLoaded', function() {
 
+try {
+
 participantId = generateParticipantId();
 
 animateFloatingElements();
@@ -1777,6 +1779,14 @@ animateFloatingElements();
 initializeSlider();
 
 setupEventListeners();
+
+console.log('Page loaded successfully');
+
+} catch (error) {
+
+console.error('Error during page load:', error);
+
+}
 
 });
 
@@ -1824,6 +1834,36 @@ slider.addEventListener('input', updateDonationDisplay);
 
 function setupEventListeners() {
 
+// Add click handlers for main navigation buttons
+
+const consentBtn = document.querySelector('button[onclick="proceedToSection(\'demographics\')"]');
+
+if (consentBtn) {
+
+consentBtn.addEventListener('click', function(e) {
+
+console.log('Consent button clicked');
+
+proceedToSection('demographics');
+
+});
+
+}
+
+const noConsentBtn = document.querySelector('button[onclick="proceedToSection(\'thank-you\')"]');
+
+if (noConsentBtn) {
+
+noConsentBtn.addEventListener('click', function(e) {
+
+console.log('No consent button clicked');
+
+proceedToSection('thank-you');
+
+});
+
+}
+
 // Final consent checkbox
 
 setTimeout(() => {
@@ -1852,7 +1892,13 @@ if (e.target.name === 'attention') {
 
 const anyChecked = document.querySelector('input[name="attention"]:checked');
 
-document.getElementById('attention-continue').disabled = !anyChecked;
+const continueBtn = document.getElementById('attention-continue');
+
+if (continueBtn) {
+
+continueBtn.disabled = !anyChecked;
+
+}
 
 }
 
@@ -1860,7 +1906,13 @@ if (e.target.name && e.target.name.startsWith('validity')) {
 
 const anyChecked = document.querySelector('input[name="validity"]:checked');
 
-document.getElementById('validity-continue').disabled = !anyChecked;
+const continueBtn = document.getElementById('validity-continue');
+
+if (continueBtn) {
+
+continueBtn.disabled = !anyChecked;
+
+}
 
 }
 
@@ -1869,6 +1921,8 @@ document.getElementById('validity-continue').disabled = !anyChecked;
 }
 
 function proceedToSection(sectionId) {
+
+try {
 
 // Add current section to history for back navigation
 
@@ -1880,29 +1934,55 @@ sectionHistory.push(currentSection);
 
 }
 
+// Hide all sections
+
 document.querySelectorAll('.section').forEach(section => {
 
 section.classList.add('hidden');
 
 });
 
-document.getElementById(sectionId).classList.remove('hidden');
+// Show target section
 
-// Show/hide progress container
+const targetSection = document.getElementById(sectionId);
 
-if (sectionId === 'zoo-encounter' || sectionId === 'manipulation-check') {
+if (targetSection) {
 
-document.getElementById('progress-container').classList.remove('hidden');
+targetSection.classList.remove('hidden');
 
 } else {
 
-document.getElementById('progress-container').classList.add('hidden');
+console.error('Section not found:', sectionId);
+
+return;
+
+}
+
+// Show/hide progress container
+
+const progressContainer = document.getElementById('progress-container');
+
+if (sectionId === 'zoo-encounter' || sectionId === 'manipulation-check') {
+
+progressContainer.classList.remove('hidden');
+
+} else {
+
+progressContainer.classList.add('hidden');
 
 }
 
 // Scroll to top
 
 window.scrollTo(0, 0);
+
+console.log('Navigated to section:', sectionId);
+
+} catch (error) {
+
+console.error('Error navigating to section:', sectionId, error);
+
+}
 
 }
 
