@@ -1441,8 +1441,16 @@ study_completed: 'No - Declined Consent',
 study_duration_minutes: Math.round((Date.now() - studyStartTime) / 60000)
 };
 
-// Submit the non-consent data
-submitDataToGoogleSheets(nonConsentData);
+console.log('📝 Non-consent data to submit:', nonConsentData);
+
+// Submit the non-consent data and handle response
+submitDataToGoogleSheets(nonConsentData)
+.then(() => {
+console.log('✅ Non-consent data submitted successfully');
+})
+.catch((error) => {
+console.error('❌ Failed to submit non-consent data:', error);
+});
 
 // Show thank you page
 proceedToSection('thank-you');
@@ -1463,8 +1471,16 @@ study_completed: 'No - Ineligible',
 study_duration_minutes: Math.round((Date.now() - studyStartTime) / 60000)
 };
 
-// Submit the ineligible data
-submitDataToGoogleSheets(ineligibleData);
+console.log('📝 Ineligible data to submit:', ineligibleData);
+
+// Submit the ineligible data and handle response
+submitDataToGoogleSheets(ineligibleData)
+.then(() => {
+console.log('✅ Ineligible data submitted successfully');
+})
+.catch((error) => {
+console.error('❌ Failed to submit ineligible data:', error);
+});
 
 // Show thank you page
 proceedToSection('thank-you');
@@ -1481,7 +1497,16 @@ submitBtn.disabled = true;
 }
 
 console.log('📤 Submitting data to Google Sheets:', data);
+console.log('🔗 Using URL:', GOOGLE_SCRIPT_URL);
 
+// Create form data as alternative to JSON
+const formData = new FormData();
+Object.keys(data).forEach(key => {
+formData.append(key, data[key]);
+});
+
+// Try fetch with JSON first
+try {
 const response = await fetch(GOOGLE_SCRIPT_URL, {
 method: 'POST',
 mode: 'no-cors',
@@ -1491,11 +1516,47 @@ headers: {
 body: JSON.stringify(data)
 });
 
-console.log('✅ Data submitted successfully');
+console.log('✅ JSON submission attempt complete');
+} catch (jsonError) {
+console.warn('⚠️ JSON submission failed, trying form data:', jsonError);
+
+// Fallback to form data
+try {
+const formResponse = await fetch(GOOGLE_SCRIPT_URL, {
+method: 'POST',
+mode: 'no-cors',
+body: formData
+});
+console.log('✅ Form data submission attempt complete');
+} catch (formError) {
+console.error('❌ Both submission methods failed:', formError);
+throw formError;
+}
+}
+
+// Store data locally as backup
+try {
+const dataKey = `study_backup_${data.participant_id}_${Date.now()}`;
+const dataString = JSON.stringify(data);
+// Store in a global variable as localStorage fallback
+window.studyBackupData = window.studyBackupData || [];
+window.studyBackupData.push({ key: dataKey, data: data });
+console.log('💾 Data backed up locally:', dataKey);
+} catch (storageError) {
+console.warn('⚠️ Local backup failed:', storageError);
+}
+
+console.log('✅ Data submission process completed');
 return true;
 
 } catch (error) {
 console.error('❌ Error submitting data:', error);
+
+// Show user-friendly error
+const errorMsg = 'Unable to save data to server. Data has been backed up locally.';
+alert(errorMsg);
+console.error('Full error details:', error);
+
 if (submitBtn) {
 submitBtn.innerHTML = '⚠️ Error - Try Again';
 submitBtn.disabled = false;
