@@ -762,11 +762,15 @@
 
             <h3>📝 What will be done:</h3>
             <p>If you agree to participate, you will first complete an informed consent form and a short demographic
-                questionnaire. After that, you will take part in a zoo-themed decision-making task. You will be asked to
-                pay an entrance fee of RM140, which will be converted into 140 tokens. As you visit different animals,
-                you will decide how many of these tokens to donate for the animals' food and medical care, and how many
-                to keep for yourself. At the end of the task, any tokens you do not donate will be refunded to you in
-                cash. The entire study will take no longer than 30 minutes to complete.</p>
+                questionnaire. If you agree to participate, you will first complete an informed consent form and a short 
+                demographic questionnaire. After that, you will take part in a zoo-themed decision-making task.
+                In this task, you will be told that you are required to pay an entrance fee of RM140, which will be converted 
+                into 140 tokens (1 token = RM1). You will then visit 14 animals in total, and for each animal you will be 
+                given 10 tokens from this entrance fee to allocate.
+                For each animal, you must decide how many of the 10 tokens to donate for the animal’s food and medical care, 
+                and how many to keep for yourself. 
+                You may choose any whole number between 0 and 10 tokens. At the end of the task, all the tokens you kept across 
+                the 14 animals will be described as being refunded to you in cash (RM). The entire study will take no longer than 30 minutes to complete.</p>
 
             <h3>⚠️ Risks or discomfort:</h3>
             <p>There is no foreseeable risk or discomfort from this study. If you find your participation in this study
@@ -934,7 +938,7 @@
                 <p style="font-size: 1.1rem; color: #666;">After finishing all the animals, we'll show the total amount
                     you "spent" on the animals.</p>
 
-                <button class="btn enter-zoo-btn btn-standalone" onclick="startDictatorGame()">🚪 Enter Zoo</button>
+                <button class="btn enter-zoo-btn btn-standalone" onclick="startDictatorGame()">🚪 Pay RM140 to Enter Zoo</button>
             </div>
 
             <div class="navigation-buttons" style="margin-top: 2rem;">
@@ -1064,9 +1068,9 @@
                     is the amount will be given to the animal recipient</label>
                 <label><input type="checkbox" name="validity" value="incorrect1"> The amount that I indicate on the
                     slider is the amount that I wish to keep for myself</label>
-                <label><input type="checkbox" name="validity" value="incorrect2"> I only have RM10 to donate throughout
+                <label><input type="checkbox" name="validity" value="incorrect2"> I have 10 tokens to donate throughout
                     the study</label>
-                <label><input type="checkbox" name="validity" value="correct2"> I have RM10 to donate to each of the
+                <label><input type="checkbox" name="validity" value="correct2"> I have 10 tokens to donate to each of the
                     animal</label>
             </div>
 
