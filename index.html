@@ -37,12 +37,9 @@
         }
 
         @keyframes float {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0px) rotate(0deg);
             }
-
             50% {
                 transform: translateY(-30px) rotate(180deg);
             }
@@ -97,7 +94,6 @@
             from {
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.2);
             }
-
             to {
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.4);
             }
@@ -109,9 +105,7 @@
             font-weight: 300;
         }
 
-        h1,
-        h2,
-        h3 {
+        h1, h2, h3 {
             color: #667eea;
             margin-bottom: 1rem;
         }
@@ -130,8 +124,7 @@
             font-size: 1.3rem;
         }
 
-        p,
-        li {
+        p, li {
             color: #555;
             margin-bottom: 1rem;
             line-height: 1.6;
@@ -143,18 +136,66 @@
         }
 
         .highlight {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-    padding: 2rem;
-    border-radius: 15px;
-    margin: 1.5rem 0;
-    box-shadow: 0 15px 30px rgba(240, 147, 251, 0.3);
-    text-align: center;
-    font-weight: bold;
-    text-shadow: none;
-}
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            box-shadow: 0 15px 30px rgba(240, 147, 251, 0.3);
+            text-align: center;
+            font-weight: bold;
+            text-shadow: none;
+        }
+
+        .highlight.zoo-instructions {
+            text-align: left;
+        }
 
         .highlight h3 {
+            color: white;
+            text-shadow: none;
+        }
+
+        .highlight p {
+            color: white;
+            text-shadow: none;
+        }
+        
+        .highlight strong {
+            font-weight: 700;
+            color: #ffeb3b;
+        }
+        
+        .highlight em {
+            color: white;
+            font-style: italic;
+            text-shadow: none;
+        }
+        
+        .highlight ul {
+            padding-left: 20px;
+        }
+        
+        .highlight li {
+            margin-bottom: 8px;
+            color: white;
+            text-shadow: none;
+        }
+        
+        .highlight ol {
+            margin-top: 8px;
+        }
+        
+        .highlight ol li {
+            color: white;
+            text-shadow: none;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 10px;
             color: white;
             text-shadow: none;
         }
@@ -250,11 +291,9 @@
                 transform: translateX(-100%) translateY(-100%) rotate(45deg);
                 opacity: 0;
             }
-
             50% {
                 opacity: 1;
             }
-
             100% {
                 transform: translateX(100%) translateY(100%) rotate(45deg);
                 opacity: 0;
@@ -340,19 +379,12 @@
         }
 
         @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
+            0%, 20%, 50%, 80%, 100% {
                 transform: translateY(0);
             }
-
             40% {
                 transform: translateY(-20px);
             }
-
             60% {
                 transform: translateY(-10px);
             }
@@ -374,11 +406,9 @@
             0% {
                 transform: scale(1);
             }
-
             50% {
                 transform: scale(1.05);
             }
-
             100% {
                 transform: scale(1);
             }
@@ -602,16 +632,12 @@
         }
 
         @keyframes shake {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateX(0);
             }
-
             25% {
                 transform: translateX(-8px);
             }
-
             75% {
                 transform: translateX(8px);
             }
@@ -736,51 +762,6 @@
                 max-width: 300px;
             }
         }
-
-        /* Updated styles for the zoo instructions */
-        .highlight p {
-            color: white;
-            text-shadow: none;
-        }
-        
-        .highlight strong {
-            font-weight: 700;
-            color: #ffeb3b;
-        }
-        
-        .highlight em {
-            color: white;
-            font-style: italic;
-            text-shadow: none;
-        }
-        
-        .highlight ul {
-            padding-left: 20px;
-        }
-        
-        .highlight li {
-            margin-bottom: 8px;
-            color: white;
-            text-shadow: none;
-        }
-        
-        .highlight ol {
-            margin-top: 8px;
-        }
-        
-        .highlight ol li {
-            color: white;
-            text-shadow: none;
-        }
-        
-        .section-title {
-            font-weight: 700;
-            font-size: 1.1em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: white;
-            text-shadow: none;
-        }
     </style>
 </head>
 
@@ -900,6 +881,7 @@
             <div class="form-group">
                 <label>🎂 What is your age?</label>
                 <div class="radio-group age-grid">
+                    <label><input type="radio" name="age" value="18"> 18</label>
                     <label><input type="radio" name="age" value="19"> 19</label>
                     <label><input type="radio" name="age" value="20"> 20</label>
                     <label><input type="radio" name="age" value="21"> 21</label>
@@ -972,7 +954,7 @@
                 <p style="font-size: 1.2rem; margin-bottom: 2rem;">You're about to embark on an amazing virtual zoo
                     adventure!</p>
 
-                <div class="highlight">
+                <div class="highlight zoo-instructions">
                     <h3>🎯 Welcome to the Virtual Zoo!</h3>
                     
                     <p>In this study, you will receive a <em><strong>virtual zoo ticket</strong></em> worth <strong>RM140</strong>, which is converted into <strong>140 tokens</strong> (1 token = RM1). This amount is provided by the research team — you do not need to pay anything.</p>
@@ -1492,7 +1474,7 @@
             <img src="${imageUrl}" class="animal-image" alt="Animal ${index + 1}" style="max-width: 250px; height: 250px;">
             <h3>🌟 How cute is this animal?</h3>
             <div class="likert-scale">
-                ${[0, 1, 2, 3, 4, 5, 6, 7].slice(1).map(value => `
+                ${[1, 2, 3, 4, 5, 6, 7].map(value => `
                     <div class="likert-item">
                         <input type="radio" name="cuteness-${index}" value="${value}" id="cute-${index}-${value}">
                         <label for="cute-${index}-${value}">
@@ -1530,11 +1512,9 @@
                     : `✅ Continue (${answeredCount}/${animalImages.length} rated)`;
             }
 
-
             container.addEventListener('change', checkAllAnswered);
             checkAllAnswered();
         }
-
 
         function goBackFromAnimal() {
             if (currentAnimalIndex > 0) {
@@ -1638,7 +1618,7 @@
                 study_completed: 'Yes'
             };
 
-            // 🔥 Flatten cuteness ratings into individual fields
+            // Flatten cuteness ratings into individual fields
             for (let i = 0; i < animalImages.length; i++) {
                 const rating = document.querySelector(`input[name="cuteness-${i}"]:checked`)?.value;
                 if (rating) {
@@ -1655,7 +1635,6 @@
 
             return studyData;
         }
-
 
         async function submitDataToGoogleSheets(data) {
             const submitBtn = document.getElementById('complete-study-btn');
@@ -1840,5 +1819,4 @@
     </script>
 </body>
 
-</html>="age" value="18"> 18</label>
-                    <label><input type="radio" name
+</html>
