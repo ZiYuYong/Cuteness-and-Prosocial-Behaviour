@@ -790,7 +790,7 @@
 
             <h3>🔬 Description of the project:</h3>
             <p>This study aims to investigate the effect of cuteness on prosocial behaviour. To take part in this study,
-                you must age between 18 and 25 years old. In addition, you should not have any visionary problems.</p>
+                you must be between 18 and 25 years old. In addition, you should not have any vision problems.</p>
 
             <h3>📝 What will be done:</h3>
             <p>If you agree to participate, you will first complete an informed consent form and a short demographic
@@ -834,7 +834,7 @@
                 the researcher and the researcher's supervisor will be able to access the information gathered.</p>
 
             <h3>🚪 Decision to quit at any time:</h3>
-            <p>Participation in this study is voluntary based. You reserve the right to withdraw at any time, with no
+            <p>Participation in this study is voluntary. You reserve the right to withdraw at any time, with no
                 adverse actions being implemented. If you wish to terminate participation, please exit the experiment
                 without submitting your responses.</p>
 
@@ -1024,7 +1024,7 @@
                     <div class="slider-container">
                         <input type="range" min="0" max="10" value="0" class="slider" id="donation-slider">
                         <div class="slider-values">
-                            <span>0 tokens</span>
+                            <span>0 token</span>
                             <span>10 tokens</span>
                         </div>
                     </div>
@@ -1119,11 +1119,11 @@
 
         <div class="section hidden" id="validity-test">
             <h1>Understanding Check</h1>
-            <p>What are the requirements for the task? (Select all that applies)</p>
+            <p>What are the requirements for the task? (Select all that apply)</p>
 
             <div class="checkbox-group">
                 <label><input type="checkbox" name="validity" value="correct1"> The amount that I indicate on the slider
-                    is the amount will be given to the animal recipient</label>
+                    is the amount that will be given to the animal recipient</label>
                 <label><input type="checkbox" name="validity" value="incorrect1"> The amount that I indicate on the
                     slider is the amount that I wish to keep for myself</label>
                 <label><input type="checkbox" name="validity" value="incorrect2"> I have 10 tokens to donate throughout
@@ -1430,8 +1430,8 @@
             const donationAmount = parseInt(slider.value);
             const keepAmount = 10 - donationAmount;
 
-            const donationText = donationAmount === 1 ? 'token' : 'tokens';
-            const keepText = keepAmount === 1 ? 'token' : 'tokens';
+            const donationText = donationAmount === 1 ? 'token' : donationAmount === 0 ? 'token' : 'tokens';
+            const keepText = keepAmount === 1 ? 'token' : keepAmount === 0 ? 'token' : 'tokens';
 
             document.getElementById('donation-amount').textContent = `${donationAmount} ${donationText}`;
             document.getElementById('keep-amount').textContent = `${keepAmount} ${keepText}`;
