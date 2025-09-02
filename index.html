@@ -1002,7 +1002,7 @@
             </div>
         </div>
 
-        <div class="progress-container hidden" id="progress-container">
+        <div class="progress-container hidden" id="progress-container" style="display: none;">
             <div class="progress-text">Animal <span id="current-animal">1</span> of 14</div>
             <div class="progress-bar">
                 <div class="progress-fill" id="game-progress"></div>
@@ -1335,9 +1335,13 @@
             document.getElementById(sectionId).classList.remove('hidden');
 
             if (sectionId === 'zoo-encounter' || sectionId === 'manipulation-check') {
-                document.getElementById('progress-container').classList.remove('hidden');
+                const progressContainer = document.getElementById('progress-container');
+                progressContainer.classList.remove('hidden');
+                progressContainer.style.display = 'block';
             } else {
-                document.getElementById('progress-container').classList.add('hidden');
+                const progressContainer = document.getElementById('progress-container');
+                progressContainer.classList.add('hidden');
+                progressContainer.style.display = 'none';
             }
 
             window.scrollTo(0, 0);
