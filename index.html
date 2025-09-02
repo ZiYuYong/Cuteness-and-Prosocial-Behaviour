@@ -154,6 +154,11 @@
     text-shadow: none;
 }
 
+        .highlight h3 {
+            color: white;
+            text-shadow: none;
+        }
+
         .info-box {
             background: rgba(103, 126, 234, 0.1);
             border-left: 5px solid #667eea;
@@ -731,6 +736,51 @@
                 max-width: 300px;
             }
         }
+
+        /* Updated styles for the zoo instructions */
+        .highlight p {
+            color: white;
+            text-shadow: none;
+        }
+        
+        .highlight strong {
+            font-weight: 700;
+            color: #ffeb3b;
+        }
+        
+        .highlight em {
+            color: white;
+            font-style: italic;
+            text-shadow: none;
+        }
+        
+        .highlight ul {
+            padding-left: 20px;
+        }
+        
+        .highlight li {
+            margin-bottom: 8px;
+            color: white;
+            text-shadow: none;
+        }
+        
+        .highlight ol {
+            margin-top: 8px;
+        }
+        
+        .highlight ol li {
+            color: white;
+            text-shadow: none;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: none;
+        }
     </style>
 </head>
 
@@ -833,7 +883,7 @@
             </div>
 
             <div class="highlight">
-                <h3>✅ By clicking the button below, you acknowledge:</h3>
+                <h3 style="color: white;">✅ By clicking the button below, you acknowledge:</h3>
                 <p>Your participation in the study is voluntary.</p>
             </div>
 
@@ -850,7 +900,6 @@
             <div class="form-group">
                 <label>🎂 What is your age?</label>
                 <div class="radio-group age-grid">
-                    <label><input type="radio" name="age" value="18"> 18</label>
                     <label><input type="radio" name="age" value="19"> 19</label>
                     <label><input type="radio" name="age" value="20"> 20</label>
                     <label><input type="radio" name="age" value="21"> 21</label>
@@ -923,111 +972,42 @@
                 <p style="font-size: 1.2rem; margin-bottom: 2rem;">You're about to embark on an amazing virtual zoo
                     adventure!</p>
 
-                <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Zoo Instructions</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .highlight {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-        } 
-
-        .highlight p {
-    color: white;
-}
-        
-        .highlight h3 {
-            margin-top: 0;
-            font-size: 1.5em;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .highlight p {
-            margin-bottom: 15px;
-        }
-        
-        .highlight strong {
-            font-weight: 700;
-            color: #ffeb3b;
-        }
-        
-        .highlight em {
-            color: #4fc3f7;
-            font-style: italic;
-        }
-        
-        ul {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        .section-title {
-            font-weight: 700;
-            font-size: 1.1em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
-    <div class="highlight">
-        <h3>🎯 Welcome to the Virtual Zoo!</h3>
-        
-        <p>In this study, you will receive a <em><strong>virtual zoo ticket</strong></em> worth <strong>RM140</strong>, which is converted into <strong>140 tokens</strong> (1 token = RM1). This amount is provided by the research team — you do not need to pay anything.</p>
-        
-        <div class="section-title">Your Task</div>
-        <ul>
-            <li>You will "visit" <strong>14 animals</strong> in total.</li>
-            <li>For each animal, you are given <strong>10 tokens</strong> from your 140 tokens.</li>
-            <li>You must decide how many of the 10 tokens to:
-                <ol style="margin-top: 8px;">
-                    <li><strong>Donate</strong> to the animal for its food and medical care, and</li>
-                    <li><strong>Keep</strong> for yourself.</li>
-                </ol>
-            </li>
-        </ul>
-        
-        <div class="section-title">Example</div>
-        <ul>
-            <li>If you donate <strong>4 tokens</strong>, you keep <strong>6 tokens</strong>.</li>
-            <li>If you donate <strong>0 tokens</strong>, you keep all <strong>10 tokens</strong>.</li>
-            <li>If you donate <strong>10 tokens</strong>, you keep <strong>0 tokens</strong>.</li>
-        </ul>
-        
-        <div class="section-title">What Happens to Your Tokens</div>
-        <ul>
-            <li>At the end of the visit, any tokens you keep will be <strong>refunded to you in cash (RM)</strong> at the same rate of <strong>1 token = RM1</strong>.</li>
-        </ul>
-        
-        <div class="section-title">Important Notes</div>
-        <ul>
-            <li>The RM140 ticket is <strong>provided by the study</strong>. You do not need to make any payment.</li>
-            <li>There are <strong>no right or wrong answers</strong> — please decide based on how you feel.</li>
-            <li>All decisions are <strong>confidential</strong> and will not be shown to other participants.</li>
-        </ul>
-    </div>
-</body>
-</html>
+                <div class="highlight">
+                    <h3>🎯 Welcome to the Virtual Zoo!</h3>
+                    
+                    <p>In this study, you will receive a <em><strong>virtual zoo ticket</strong></em> worth <strong>RM140</strong>, which is converted into <strong>140 tokens</strong> (1 token = RM1). This amount is provided by the research team — you do not need to pay anything.</p>
+                    
+                    <div class="section-title">Your Task</div>
+                    <ul>
+                        <li>You will "visit" <strong>14 animals</strong> in total.</li>
+                        <li>For each animal, you are given <strong>10 tokens</strong> from your 140 tokens.</li>
+                        <li>You must decide how many of the 10 tokens to:
+                            <ol style="margin-top: 8px;">
+                                <li><strong>Donate</strong> to the animal for its food and medical care, and</li>
+                                <li><strong>Keep</strong> for yourself.</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    
+                    <div class="section-title">Example</div>
+                    <ul>
+                        <li>If you donate <strong>4 tokens</strong>, you keep <strong>6 tokens</strong>.</li>
+                        <li>If you donate <strong>0 tokens</strong>, you keep all <strong>10 tokens</strong>.</li>
+                        <li>If you donate <strong>10 tokens</strong>, you keep <strong>0 tokens</strong>.</li>
+                    </ul>
+                    
+                    <div class="section-title">What Happens to Your Tokens</div>
+                    <ul>
+                        <li>At the end of the visit, any tokens you keep will be <strong>refunded to you in cash (RM)</strong> at the same rate of <strong>1 token = RM1</strong>.</li>
+                    </ul>
+                    
+                    <div class="section-title">Important Notes</div>
+                    <ul>
+                        <li>The RM140 ticket is <strong>provided by the study</strong>. You do not need to make any payment.</li>
+                        <li>There are <strong>no right or wrong answers</strong> — please decide based on how you feel.</li>
+                        <li>All decisions are <strong>confidential</strong> and will not be shown to other participants.</li>
+                    </ul>
+                </div>
 
                 <p style="font-size: 1.1rem; color: #666;">After finishing all the animals, we'll show the total amount
                     you "spent" on the animals.</p>
@@ -1679,97 +1659,6 @@
 
         async function submitDataToGoogleSheets(data) {
             const submitBtn = document.getElementById('complete-study-btn');
-            const originalText = submitBtn.innerHTML;
-
-            try {
-                submitBtn.innerHTML = '<span class="loading-spinner"></span>Saving your data...';
-                submitBtn.disabled = true;
-
-                console.log('📤 Submitting data to Google Sheets:', data);
-
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                console.log('✅ Data submitted successfully');
-                return true;
-
-            } catch (error) {
-                console.error('❌ Error submitting data:', error);
-                submitBtn.innerHTML = '⚠️ Error - Try Again';
-                submitBtn.disabled = false;
-                showError('debriefing', 'There was an error saving your data. Please try clicking "Complete Study" again. Your responses are still saved locally.');
-                return false;
-            }
-        }
-
-        function handleNonConsent() {
-            // Collect basic data for non-consent
-            const nonConsentData = {
-                date_time: new Date().toISOString(),
-                participant_id: participantId,
-                consent_status: 'declined',
-                reason: 'user_declined_consent',
-                age: '',
-                gender: '',
-                nationality: '',
-                vision_condition: '',
-                study_completed: 'No - Declined Consent',
-                study_duration_minutes: Math.round((Date.now() - studyStartTime) / 60000)
-            };
-
-            console.log('📝 Non-consent data to submit:', nonConsentData);
-
-            // Submit the non-consent data and handle response
-            submitDataToGoogleSheets(nonConsentData)
-                .then(() => {
-                    console.log('✅ Non-consent data submitted successfully');
-                })
-                .catch((error) => {
-                    console.error('❌ Failed to submit non-consent data:', error);
-                });
-
-            // Show thank you page
-            proceedToSection('thank-you');
-        }
-
-        function handleIneligible(reason, demographicData = {}) {
-            // Collect data for ineligible participants
-            const ineligibleData = {
-                date_time: new Date().toISOString(),
-                participant_id: participantId,
-                consent_status: 'consented',
-                reason: reason,
-                age: demographicData.age || '',
-                gender: demographicData.gender || '',
-                nationality: demographicData.nationality || '',
-                vision_condition: demographicData.vision || '',
-                study_completed: 'No - Ineligible',
-                study_duration_minutes: Math.round((Date.now() - studyStartTime) / 60000)
-            };
-
-            console.log('📝 Ineligible data to submit:', ineligibleData);
-
-            // Submit the ineligible data and handle response
-            submitDataToGoogleSheets(ineligibleData)
-                .then(() => {
-                    console.log('✅ Ineligible data submitted successfully');
-                })
-                .catch((error) => {
-                    console.error('❌ Failed to submit ineligible data:', error);
-                });
-
-            // Show thank you page
-            proceedToSection('thank-you');
-        }
-
-        async function submitDataToGoogleSheets(data) {
-            const submitBtn = document.getElementById('complete-study-btn');
             const originalText = submitBtn?.innerHTML;
 
             try {
@@ -1848,6 +1737,66 @@
             }
         }
 
+        function handleNonConsent() {
+            // Collect basic data for non-consent
+            const nonConsentData = {
+                date_time: new Date().toISOString(),
+                participant_id: participantId,
+                consent_status: 'declined',
+                reason: 'user_declined_consent',
+                age: '',
+                gender: '',
+                nationality: '',
+                vision_condition: '',
+                study_completed: 'No - Declined Consent',
+                study_duration_minutes: Math.round((Date.now() - studyStartTime) / 60000)
+            };
+
+            console.log('📝 Non-consent data to submit:', nonConsentData);
+
+            // Submit the non-consent data and handle response
+            submitDataToGoogleSheets(nonConsentData)
+                .then(() => {
+                    console.log('✅ Non-consent data submitted successfully');
+                })
+                .catch((error) => {
+                    console.error('❌ Failed to submit non-consent data:', error);
+                });
+
+            // Show thank you page
+            proceedToSection('thank-you');
+        }
+
+        function handleIneligible(reason, demographicData = {}) {
+            // Collect data for ineligible participants
+            const ineligibleData = {
+                date_time: new Date().toISOString(),
+                participant_id: participantId,
+                consent_status: 'consented',
+                reason: reason,
+                age: demographicData.age || '',
+                gender: demographicData.gender || '',
+                nationality: demographicData.nationality || '',
+                vision_condition: demographicData.vision || '',
+                study_completed: 'No - Ineligible',
+                study_duration_minutes: Math.round((Date.now() - studyStartTime) / 60000)
+            };
+
+            console.log('📝 Ineligible data to submit:', ineligibleData);
+
+            // Submit the ineligible data and handle response
+            submitDataToGoogleSheets(ineligibleData)
+                .then(() => {
+                    console.log('✅ Ineligible data submitted successfully');
+                })
+                .catch((error) => {
+                    console.error('❌ Failed to submit ineligible data:', error);
+                });
+
+            // Show thank you page
+            proceedToSection('thank-you');
+        }
+
         async function completeStudy() {
             const studyData = collectStudyData();
             const submissionSuccess = await submitDataToGoogleSheets(studyData);
@@ -1891,5 +1840,5 @@
     </script>
 </body>
 
-</html>
-
+</html>="age" value="18"> 18</label>
+                    <label><input type="radio" name
